@@ -18,6 +18,18 @@ public class AlbumImpl implements Album {
         int res = Integer.compare(p1.getPhotoId(), p2.getPhotoId());
         return res != 0 ? res : Integer.compare(p1.getAlbumId(), p2.getAlbumId());
     };
+    Comparator<Photo> comparatorData = (d1,d2)->{
+        int year = Integer.compare(d1.getDate().getYear(), d2.getDate().getYear());
+        if (year != 0) {
+            return year;
+        }
+        int month = Integer.compare(d1.getDate().getMonthValue(), d2.getDate().getMonthValue());
+        if (month != 0) {
+            return month;
+        }
+        return Integer.compare(d1.getDate().getDayOfMonth(), d2.getDate().getDayOfMonth());
+
+    };
 
     @Override
     public boolean addPhoto(Photo photo) {
@@ -95,22 +107,18 @@ public class AlbumImpl implements Album {
 
     @Override
     public Photo[] getPhotoBetweenDate(LocalDate dateFrom, LocalDate dateTo) {
-//      todo не могу понять в чум проблема!!!
-        Photo[] result = Arrays.copyOf(photos, size);
-
-        Arrays.sort(result, comparator);
-
+//      todo не могу понять в чем проблема!!!
+        Photo[] result = new Photo[size];
         int index = 0;
         for (int i = 0; i < size; i++) {
-            LocalDate photoDate = result[i].getDate().toLocalDate();
+            LocalDate photoDate = photos[i].getDate().toLocalDate();
 
-            if (photoDate.isAfter(dateFrom) && photoDate.isBefore(dateTo)) {
+            if (!photoDate.isBefore(dateFrom) && !photoDate.isAfter(dateTo)) {
                 result[index] = photos[i];
                 index++;
             }
         }
-        result = Arrays.copyOf(result, index);
-        return result;
+        return Arrays.copyOf(result, index);
     }
 
 
