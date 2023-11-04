@@ -33,7 +33,6 @@ public class AlbumImpl implements Album {
 
     @Override
     public boolean addPhoto(Photo photo) {
-//        todo нужно увеличивать массив когда он заполнен???
         if (photos.length == size) return false;
         if (photo == null) return false;
         if (getPhotoFromAlbum(photo.getPhotoId(), photo.getAlbumId()) != null) return false;
@@ -107,7 +106,7 @@ public class AlbumImpl implements Album {
 
     @Override
     public Photo[] getPhotoBetweenDate(LocalDate dateFrom, LocalDate dateTo) {
-//      todo не могу понять в чем проблема!!!
+//      todo ПЕРЕДЕЛАЛ!!!
         Photo[] result = new Photo[size];
         int index = 0;
         for (int i = 0; i < size; i++) {
