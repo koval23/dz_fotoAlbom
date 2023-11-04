@@ -41,10 +41,12 @@ class AlbumTest {
     @Test
     void addPhoto() {
         assertFalse(album.addPhoto(null));
-        assertTrue(album.addPhoto(new Photo(1, 5, "title3", "url1", now.minusDays(2))));
-        assertFalse(album.addPhoto(ph[0]));
-        assertTrue(album.addPhoto(new Photo(2, 6, "title6", "url6", now.minusDays(2))));
+        assertFalse(album.addPhoto(ph[1]));
+        Photo photo = new Photo(1, 5, "title5", "url5", now.minusDays(3));
+        assertTrue(album.addPhoto(photo));
         assertEquals(7, album.size());
+        photo = new Photo(1, 6, "title6", "url6", now.minusDays(3));
+        assertFalse(album.addPhoto(photo));
 
     }
 
@@ -69,8 +71,8 @@ class AlbumTest {
     }
 
     @Test
-    void detAllPhotoFromAlbum() {
-        Photo[] actual = album.detAllPhotoFromAlbum(2);
+    void getAllPhotoFromAlbum() {
+        Photo[] actual = album.getAllPhotoFromAlbum(2);
         Photo[] expected = {ph[3], ph[4]};
         Arrays.sort(actual, comparator);
         assertArrayEquals(expected, actual);
